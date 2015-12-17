@@ -21,6 +21,7 @@ class AlertUITests: XCTestCase {
         XCUIApplication().launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        XCUIDevice.sharedDevice().orientation = .LandscapeLeft
     }
     
     override func tearDown() {
@@ -31,6 +32,18 @@ class AlertUITests: XCTestCase {
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let desc = "\u{201c}Alert\u{201d} Would Like to Access the Camera"
+        
+        let app = XCUIApplication()
+        
+        addUIInterruptionMonitorWithDescription(desc) { (alert) -> Bool in
+            let okButton = alert.buttons["OK"]
+            print(okButton.frame)
+            okButton.tap()
+            return true
+        }
+        app.buttons["Alert"].tap()
+        app.buttons["Button"].tap()
     }
     
 }
